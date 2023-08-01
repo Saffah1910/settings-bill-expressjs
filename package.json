@@ -25,7 +25,9 @@
   "contributors": [],
   "scripts": {
     "dev": "",
-    "test": ""
+    "test": "",
+    "start": "node index.js"
+    
   },
   "dependencies": {
     "body-parser": "^1.20.2",

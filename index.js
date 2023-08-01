@@ -21,9 +21,11 @@ app.get('/', function (req, res) {
 // const settings = settingsBill.getSettings();
 // // res.send({settings})
     res.render('index' , 
-     {settings1: settingsBill.getSettings()}
-
-    );
+     {settings1: settingsBill.getSettings(),
+        totals : settingsBill.totals()
+    
+    
+    });
 });
 
 app.post('/settings', function (req, res) {
@@ -40,16 +42,28 @@ console.log(settingsBill.getSettings());
     res.redirect('/');
 });
 
-app.post('./action', function (req, res) {
+app.post('/action', function (req, res) {
+
+    settingsBill.recordAction(req.body.actionType);
+
+    res.redirect('/');
 
 });
 
-app.get('./actions', function (req, res) {
+app.get('/actions', function (req, res) {
+res.render('actions',
+{actions: settingsBill.actions()
+
+});
 
 });
 //this will set call or sms cost
-app.get('./actions/:type', function (req, res) {
-
+app.get('/actions/:actionType', function (req, res) {
+    const actionType = req.params.actionType;
+    res.render('actions',
+    {actions: settingsBill.actionsFor(actionType)
+    
+    });
 });
 
 
