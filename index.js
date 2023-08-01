@@ -18,7 +18,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get('/', function (req, res) {
-    res.render('index')
+// const settings = settingsBill.getSettings();
+// // res.send({settings})
+    res.render('index' , 
+     {settings1: settingsBill.getSettings()}
+
+    );
 });
 
 app.post('/settings', function (req, res) {
