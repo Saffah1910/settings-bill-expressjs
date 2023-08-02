@@ -110,6 +110,13 @@
         const total = grandTotal();
         return total >= criticalLevel;
     }
+    function levelReached(){
+        if(hasReachedWarningLevel()){
+            return "warning";
+        } else if(hasReachedCriticalLevel()){
+            return "danger";
+        }
+    }
 
     return {
         setSettings,
@@ -119,6 +126,7 @@
         actionsFor,
         totals,
         hasReachedWarningLevel,
-        hasReachedCriticalLevel
+        hasReachedCriticalLevel,
+        levelReached
     }
 }

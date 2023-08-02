@@ -18,25 +18,28 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get('/', function (req, res) {
-// const settings = settingsBill.getSettings();
-// // res.send({settings})
-    res.render('index' , 
-     {settings1: settingsBill.getSettings(),
-        totals : settingsBill.totals()
-    
-    
-    });
+    // const settings = settingsBill.getSettings();
+    // // res.send({settings})
+    res.render('index',
+        {
+            settings1: settingsBill.getSettings(),
+            totals: settingsBill.totals(),
+            levelReached: settingsBill.levelReached()
+
+
+
+        });
 });
 
 app.post('/settings', function (req, res) {
-   
-settingsBill.setSettings({
-    callCost : req.body.callCost,
-    smsCost : req.body.smsCost,
-    warningLevel : req.body.warningLevel,
-    criticalLevel : req.body.criticalLevel,
-});
-console.log(settingsBill.getSettings());
+
+    settingsBill.setSettings({
+        callCost: req.body.callCost,
+        smsCost: req.body.smsCost,
+        warningLevel: req.body.warningLevel,
+        criticalLevel: req.body.criticalLevel,
+    });
+    console.log(settingsBill.getSettings());
 
 
     res.redirect('/');
@@ -51,19 +54,21 @@ app.post('/action', function (req, res) {
 });
 
 app.get('/actions', function (req, res) {
-res.render('actions',
-{actions: settingsBill.actions()
+    res.render('actions',
+        {
+            actions: settingsBill.actions()
 
-});
+        });
 
 });
 //this will set call or sms cost
 app.get('/actions/:actionType', function (req, res) {
     const actionType = req.params.actionType;
     res.render('actions',
-    {actions: settingsBill.actionsFor(actionType)
-    
-    });
+        {
+            actions: settingsBill.actionsFor(actionType)
+
+        });
 });
 
 
