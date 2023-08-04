@@ -27,12 +27,15 @@
     function recordAction(action) {
 
         let cost = 0;
-        if (action === 'sms'){
-            cost = smsCost;
+        if(grandTotal() < criticalLevel ){
+            if (action === 'sms' ){
+                cost = smsCost;
+            }
+            else if (action === 'call'){
+                cost = callCost;
+            }
         }
-        else if (action === 'call'){
-            cost = callCost;
-        }
+      
 
         actionList.push({
             type: action,
@@ -92,9 +95,9 @@
         let smsTotal = getTotal('sms')
         let callTotal = getTotal('call')
         return {
-            smsTotal,
-            callTotal,
-            grandTotal : grandTotal()
+            smsTotal: smsTotal.toFixed(2),
+            callTotal: callTotal.toFixed(2),
+            grandTotal: grandTotal().toFixed(2)
         }
     }
 

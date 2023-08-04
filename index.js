@@ -2,6 +2,7 @@ import express from 'express';
 import { engine } from 'express-handlebars';
 import bodyParser from 'body-parser';
 import SettingsBill from './settings.js';
+import moment from 'moment';
 
 const app = express();
 const settingsBill = SettingsBill();
@@ -17,6 +18,25 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+
+// loop over the actios list which contains objects
+// and grab timestamp by using the dot notaion
+// set timestamp = moment().fromNow()
+// startOf('hour').
+
+function time() {
+    let actionTime = settingsBill.actions();
+
+    for (let i = 0; i < actionTime.length; i++) {
+        actionTime[i].timestamp = moment().fromNow();
+    }
+
+    return actionTime;
+}
+
+
+
+
 app.get('/', function (req, res) {
     // const settings = settingsBill.getSettings();
     // // res.send({settings})
@@ -24,7 +44,8 @@ app.get('/', function (req, res) {
         {
             settings1: settingsBill.getSettings(),
             totals: settingsBill.totals(),
-            levelReached: settingsBill.levelReached()
+            levelReached: settingsBill.levelReached(),
+
 
 
 
@@ -54,9 +75,12 @@ app.post('/action', function (req, res) {
 });
 
 app.get('/actions', function (req, res) {
+
+    // console.log("ACIONS.....",time());
+
     res.render('actions',
         {
-            actions: settingsBill.actions()
+            actions: time()
 
         });
 
@@ -73,7 +97,7 @@ app.get('/actions/:actionType', function (req, res) {
 
 
 //make PORT a variable so that it can be chnaged in terminal
-const PORT = process.env.PORT || 3011;
+const PORT = process.env.PORT || 3013;
 
 app.listen(PORT, function () {
     console.log("App started at port", PORT);
